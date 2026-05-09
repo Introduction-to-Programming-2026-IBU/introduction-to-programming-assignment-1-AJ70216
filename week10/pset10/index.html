@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="hero">
+    <h1>Student GPA Dashboard</h1>
+    <p>Track your courses, credits, grades, and academic progress in one place.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title mb-3">Add Course</h2>
+
+                <form action="/add" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Course Name</label>
+                        <input class="form-control" name="name" placeholder="Example: Mathematics II" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Credits / ECTS</label>
+                        <input class="form-control" name="credits" type="number" min="1" placeholder="Example: 6" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Grade</label>
+                        <input class="form-control" name="grade" type="number" min="5" max="10" step="0.01" placeholder="Example: 9.5" required>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Add Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="card text-bg-primary shadow-sm">
+            <div class="card-body">
+                <h5>Total GPA</h5>
+                <p class="display-6">{{ gpa }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-bg-success shadow-sm">
+            <div class="card-body">
+                <h5>Courses</h5>
+                <p class="display-6">{{ course_count }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-bg-dark shadow-sm">
+            <div class="card-body">
+                <h5>Total Credits</h5>
+                <p class="display-6">{{ total_credits }}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-3">Courses</h2>
+
+                {% if courses %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for course in courses %}
+                                <tr>
+                                    <td>{{ course.name }}</td>
+                                    <td>{{ course.credits }}</td>
+                                    <td>{{ course.grade }}</td>
+                                    <td>
+                                         <a class="btn btn-warning btn-sm"
+                                             href="/edit/{{ course.id }}">
+                                             Edit
+                                         </a>
+                                         <a class="btn btn-danger btn-sm"
+                                             href="/delete/{{ course.id }}">
+                                             Delete
+                                         </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No courses added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

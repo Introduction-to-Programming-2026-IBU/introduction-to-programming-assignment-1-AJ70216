@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1 class="mb-4">Edit Course</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form action="/edit/{{ course.id }}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Course Name</label>
+                <input class="form-control" name="name" value="{{ course.name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Credits / ECTS</label>
+                <input class="form-control" name="credits" type="number" min="1" value="{{ course.credits }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Grade</label>
+                <input class="form-control" name="grade" type="number" min="5" max="10" step="0.01" value="{{ course.grade }}" required>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+            <a class="btn btn-secondary" href="/">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
